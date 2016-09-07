@@ -4,13 +4,12 @@
     Date Created: 23/08/2016
     License: MIT
 
-    Companion Computer for hybrid monocopter capable of fixed wing and rotor flight.
+    Flight Controller for hybrid monocopter capable of fixed wing and rotor flight.
 
     Version: 0.2.1
-    Date Modified: 23/08/2016
+    Date Modified: 07/09/2016
 
     Hardware Setup:
-
     Tindie ---------- FC
     3.3V  ----------- 3.3V
     GND ------------- GND

@@ -3,8 +3,11 @@
 if (rc_mode < 1500) {
 
   // Set Mode Origins ============================================================================================
-  l_origin = servo_min + 5;
-  r_origin = servo_min + 2;
+  //l_origin = servo_min + 5;  // Counter-Clockwise
+  //r_origin = servo_min + 2;
+
+  l_origin = servo_max - 15;  // Clockwise
+  r_origin = servo_max - 7;
 
   // Prep Flight Mode ============================================================================================
   if (mode != FIXED_WING) {
