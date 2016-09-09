@@ -149,13 +149,17 @@ if (rc_mode < 1500) {
 
   // ==
 
-  if (yaw_out >= 0) {
+  if (yaw_out > 0) {
     con_lmotor = fw_throttle + yaw_out;
     con_rmotor = fw_throttle;
   }
   else if (yaw_out < 0) {
     con_lmotor = fw_throttle;
     con_rmotor = fw_throttle - yaw_out;
+  }
+  else if (yaw_out == 0) {
+    con_lmotor = fw_throttle;
+    con_rmotor = fw_throttle;
   }
 
   if (fw_throttle < 1000) {
