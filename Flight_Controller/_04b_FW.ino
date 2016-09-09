@@ -79,7 +79,7 @@ if (rc_mode < 1500) {
       des_yaw = 0;
     }
     else {
-      des_yaw = rc_yaw * PI / 1000;
+      des_yaw = (rc_yaw * PI / 1000) -(3*PI/2);
     }
   }
 
@@ -108,14 +108,25 @@ if (rc_mode < 1500) {
   // else if (des_yaw != 0 {
   //   des_heading = des_yaw + yaw;
   // }
-  des_heading = 0;
 
-  e_sYaw[2] = (yaw - des_heading) - e_sYaw[0];
-  e_sYaw[0] = yaw - des_heading;
+  // Yaw to North ======
+  /*
+    des_heading = 0;
+
+    e_sYaw[2] = (yaw - des_heading) - e_sYaw[0];
+    e_sYaw[0] = yaw - des_heading;
+    e_sYaw[1] += (e_sYaw[0]  * deltat);
+
+    yaw_out = K_sYaw[0] * e_sYaw[0] + K_sYaw[1] * e_sYaw[1] + K_sYaw[2] * e_sYaw[2];
+  */
+
+  // Direct Yaw Input   ====
+
+  e_sYaw[2] = des_yaw - e_sYaw[0];
+  e_sYaw[0] = des_yaw;
   e_sYaw[1] += (e_sYaw[0]  * deltat);
 
- // yaw_out = K_sYaw[0] * e_sYaw[0] + K_sYaw[1] * e_sYaw[1] + K_sYaw[2] * e_sYaw[2];
-  yaw_out = 0;
+  yaw_out = K_sYaw[0] * e_sYaw[0] + K_sYaw[1] * e_sYaw[1] + K_sYaw[2] * e_sYaw[2];
 
   // Actual Outputs
   con_lflap = l_trim + l_origin - (pitch_out - roll_out);
