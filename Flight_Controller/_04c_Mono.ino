@@ -1,8 +1,12 @@
 // Monocopter Mode ===================================================================================================
 else if (rc_mode > 1500) {
   // Set Mode Origins ============================================================================================
-  l_origin = servo_max - 15;
-  r_origin = servo_max - 7;
+
+  l_origin = servo_max - 26; // Counter-Clockwise
+  r_origin = servo_max - 18;
+
+  // l_origin = servo_min + 5;    // Clockwise
+  // r_origin = servo_min + 15;
 
   // Prep Flight Mode ============================================================================================
   if (mode != MONOCOPTER) {

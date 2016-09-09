@@ -3,8 +3,11 @@
 if (rc_mode < 1500) {
 
   // Set Mode Origins ============================================================================================
-  l_origin = servo_min + 5;
+  l_origin = servo_min + 5;  // Counter-Clockwise
   r_origin = servo_min + 2;
+
+  //l_origin = servo_max - 15;  // Clockwise
+  //r_origin = servo_max - 7;
 
   // Prep Flight Mode ============================================================================================
   if (mode != FIXED_WING) {
@@ -76,7 +79,11 @@ if (rc_mode < 1500) {
       des_yaw = 0;
     }
     else {
+<<<<<<< HEAD
       des_yaw = abs((rc_yaw - 1500) * PI / 1000); // abs difference from mid-yaw
+=======
+      des_yaw = (rc_yaw * PI / 1000) -(3*PI/2);
+>>>>>>> refs/remotes/lowjunen/master
     }
   }
 
@@ -104,15 +111,32 @@ if (rc_mode < 1500) {
   // }
   // else if (des_yaw != 0 {
   //   des_heading = des_yaw + yaw;
+<<<<<<< HEAD
   
   if (des_yaw == 0) des_heading = hold_heading;
   else {
     hold_heading += des_yaw;
     des_heading = hold_heading;
   }
+=======
+  // }
+>>>>>>> refs/remotes/lowjunen/master
 
-  e_sYaw[2] = (yaw - des_heading) - e_sYaw[0];
-  e_sYaw[0] = yaw - des_heading;
+  // Yaw to North ======
+  /*
+    des_heading = 0;
+
+    e_sYaw[2] = (yaw - des_heading) - e_sYaw[0];
+    e_sYaw[0] = yaw - des_heading;
+    e_sYaw[1] += (e_sYaw[0]  * deltat);
+
+    yaw_out = K_sYaw[0] * e_sYaw[0] + K_sYaw[1] * e_sYaw[1] + K_sYaw[2] * e_sYaw[2];
+  */
+
+  // Direct Yaw Input   ====
+
+  e_sYaw[2] = des_yaw - e_sYaw[0];
+  e_sYaw[0] = des_yaw;
   e_sYaw[1] += (e_sYaw[0]  * deltat);
 
   yaw_out = K_sYaw[0] * e_sYaw[0] + K_sYaw[1] * e_sYaw[1] + K_sYaw[2] * e_sYaw[2];
@@ -145,6 +169,10 @@ if (rc_mode < 1500) {
   else if (yaw_out < 0) {
     con_lmotor = fw_throttle;
     con_rmotor = fw_throttle - yaw_out;
+  }
+  else if (yaw_out == 0) {
+    con_lmotor = fw_throttle;
+    con_rmotor = fw_throttle;
   }
 
   if (fw_throttle < 1000) {
