@@ -33,7 +33,7 @@ const int8_t R_FLAP = 23;
 // ===========================================================================================================
 // Fixed Wing Controller Variables ===========================================================================
 
-float des_yaw, des_roll, des_pitch, des_heading, yaw_out, pitch_out, roll_out, fw_trim;
+float des_yaw, des_roll, des_pitch, des_heading, yaw_out, pitch_out, roll_out, fw_trim, hold_heading;
 
 float e_Roll[3] = {0.0f, 0.0f, 0.0f};
 float e_Pitch[3] = {0.0f, 0.0f, 0.0f};

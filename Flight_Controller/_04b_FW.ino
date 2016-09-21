@@ -3,8 +3,8 @@
 if (rc_mode < 1500) {
 
   // Set Mode Origins ============================================================================================
-  l_origin = servo_min + 5;  // Counter-Clockwise
-  r_origin = servo_min + 2;
+  l_origin = servo_min + 10;  // Counter-Clockwise
+  r_origin = servo_min + 20;
 
   //l_origin = servo_max - 15;  // Clockwise
   //r_origin = servo_max - 7;
@@ -14,7 +14,7 @@ if (rc_mode < 1500) {
     memset(e_Roll, 0, sizeof(e_Roll));
     memset(e_Pitch, 0, sizeof(e_Pitch));
     memset(e_sYaw, 0, sizeof(e_sYaw));
-
+    hold_heading = yaw;
     mode = FIXED_WING;
   }
 
@@ -79,7 +79,7 @@ if (rc_mode < 1500) {
       des_yaw = 0;
     }
     else {
-      des_yaw = (rc_yaw * PI / 1000) -(3*PI/2);
+      des_yaw = ((rc_yaw - 1500) * PI / 1000); // abs difference from mid-yaw
     }
   }
 
@@ -107,7 +107,12 @@ if (rc_mode < 1500) {
   // }
   // else if (des_yaw != 0 {
   //   des_heading = des_yaw + yaw;
-  // }
+  
+  if (des_yaw == 0) des_heading = hold_heading;
+  else {
+    hold_heading += des_yaw;
+    des_heading = hold_heading;
+  }
 
   // Yaw to North ======
   /*
