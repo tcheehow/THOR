@@ -26,6 +26,7 @@
     RMotor PWM --------------- 21
     LServo PWM --------------- 22
     RServo PWM --------------- 23
+    
     Motor/Servo Power -------- ESC/UBEC
 
     Receiver ----------------- FC
