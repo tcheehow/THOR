@@ -3,8 +3,8 @@
 if (rc_mode < 1500) {
 
   // Set Mode Origins ============================================================================================
-  l_origin = servo_min + 10;  // Counter-Clockwise
-  r_origin = servo_min + 20;
+  l_origin = servo_min;  // Counter-Clockwise
+  r_origin = servo_min;
 
   //l_origin = servo_max - 15;  // Clockwise
   //r_origin = servo_max - 7;

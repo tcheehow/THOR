@@ -23,6 +23,9 @@ void setup() {
 
   myIn.begin(RC);
 
+  delay(500);
+  rc_mode        = myIn.read(5);
+
   SetupBlink(2);
   delay(500);
 
@@ -38,9 +41,15 @@ void setup() {
   L_Flap.attach(L_FLAP);
   R_Flap.attach(R_FLAP);
 
-  L_Flap.write(55);
-  R_Flap.write(40);
-
+  if (rc_mode < 1500) {
+    L_Flap.write(servo_min);
+    R_Flap.write(servo_min);
+  }
+  else {
+    L_Flap.write(servo_max);
+    R_Flap.write(servo_max);
+  }
+  
   SetupBlink(3);
   delay(500);
 
@@ -127,7 +136,7 @@ void setup() {
 
   SetupBlink(4);
   delay(500);
-  
+
   // ===============================
 
   debugln("All Systems Good!!!");

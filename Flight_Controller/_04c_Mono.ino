@@ -60,8 +60,8 @@ else if (rc_mode > 1500) {
 
 
   // Determine Outputs ========================================================================================
-  con_lflap = l_origin + mono_trim - servo_comm;
-  con_rflap = r_origin + mono_trim + servo_comm;
+  con_lflap = l_origin + l_trim - servo_comm;
+  con_rflap = r_origin + r_trim + servo_comm;
 
   //con_lflap = l_origin + mono_trim;
   //con_rflap = r_origin + mono_trim;

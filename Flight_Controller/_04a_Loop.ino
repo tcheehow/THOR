@@ -103,18 +103,12 @@ void loop()
 
   // On-The-Fly Editing =========================================================================================
   if (rc_aux2 < 1000) {
-    K_Mono = map(rc_aux1, 900, 1900, 1, 30);
-    K_sYaw[2] = map(rc_aux1, 1000, 2000, 0, 1500) / 10;
-    if (K_sYaw[2] < 0) {
-      K_sYaw[2] = 0;
-    }
+    r_trim = map(rc_aux1, 900, 1900, -20, 20);
+
   }
   else if (rc_aux2 > 1900) {
-    mono_trim = map(rc_aux1, 900, 1900, -20, 20);
-    K_sYaw[0] = map(rc_aux1, 1000, 2000, 0, 1500) / 10;
-    if (K_sYaw[0] < 0) {
-      K_sYaw[0] = 0;
-    }
+    l_trim = map(rc_aux1, 900, 1900, -20, 20);
+
   }
   else {
     // do nothing
