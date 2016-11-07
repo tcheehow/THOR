@@ -61,14 +61,14 @@ if (rc_mode < 1500) {
     des_roll = 0;
   }
   else {
-    des_roll = map(rc_roll, 1000, 2000, -PI / 2, PI / 2);
+    des_roll = map(rc_roll, 1000, 2000, -60, 60);
   }
 
   if (rc_pitch > 1450 && rc_pitch < 1550) {
     des_pitch = 0;
   }
   else {
-    des_pitch = map(rc_pitch, 1000, 2000, -PI / 2, PI / 2);
+    des_pitch = map(rc_pitch, 1000, 2000, -60, 60);
   }
 
   if (rc_yaw > 1450 && rc_yaw < 1550) {
@@ -98,11 +98,11 @@ if (rc_mode < 1500) {
   e_Pitch[1] += (e_Pitch[0] * deltat);
   e_Roll[1]  += (e_Roll[0] * deltat);
 
-//  pitch_out = K_Pitch[0] * e_Pitch[0] + K_Pitch[1] * e_Pitch[1] + K_Pitch[2] * e_Pitch[2];
- // roll_out  = K_Roll[0] * e_Roll[0] + K_Roll[1] * e_Roll[1] + K_Roll[2] * e_Roll[2];
+  //pitch_out = K_Pitch[0] * e_Pitch[0] + K_Pitch[1] * e_Pitch[1] + K_Pitch[2] * e_Pitch[2];
+  //roll_out  = K_Roll[0] * e_Roll[0] + K_Roll[1] * e_Roll[1] + K_Roll[2] * e_Roll[2];
 
-  pitch_out = K_Pitch[0] * 0.6 + K_Pitch[1] * e_Pitch[1] + K_Pitch[2] * e_Pitch[2];
-  roll_out  = K_Roll[0] * 0.6 + K_Roll[1] * e_Roll[1] + K_Roll[2] * e_Roll[2];
+  pitch_out = des_pitch;
+  roll_out  = des_roll;
 
   // Yaw ============
   //  if (des_yaw == 0) {
