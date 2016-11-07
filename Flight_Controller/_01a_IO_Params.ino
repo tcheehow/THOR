@@ -40,8 +40,8 @@ float e_Pitch[3] = {0.0f, 0.0f, 0.0f};
 float e_sYaw[3] = {0.0f, 0.0f, 0.0f};
 float e_rYaw[3] = {0.0f, 0.0f, 0.0f};
 
-float K_Roll[3] = {1.0f, 0.00f, 0.0f};
-float K_Pitch[3] = {1.0f, 0.00f, 0.0f};
+float K_Roll[3] = {10.0f, 0.00f, 0.0f};
+float K_Pitch[3] = {10.0f, 0.00f, 0.0f};
 float K_sYaw[3] = {0.0f, 0.0f, 0.0f};
 float K_rYaw[3] = {0.0f, 0.0f, 0.0f};
 
