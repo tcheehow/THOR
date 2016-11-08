@@ -6,7 +6,7 @@
 
     Flight Controller for hybrid monocopter capable of fixed wing and rotor flight.
 
-    Version: 0.2.1
+    Version: 0.2.2
     Date Modified: 07/11/2016
 
     Hardware Setup:

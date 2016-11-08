@@ -49,7 +49,7 @@ void setup() {
     L_Flap.write(servo_max);
     R_Flap.write(servo_max);
   }
-  
+
   SetupBlink(3);
   delay(500);
 

@@ -3,11 +3,8 @@
 if (rc_mode < 1500) {
 
   // Set Mode Origins ============================================================================================
-  l_origin = servo_min;  // Counter-Clockwise
+  l_origin = servo_min;
   r_origin = servo_min;
-
-  //l_origin = servo_max - 15;  // Clockwise
-  //r_origin = servo_max - 7;
 
   // Prep Flight Mode ============================================================================================
   if (mode != FIXED_WING) {
@@ -61,26 +58,21 @@ if (rc_mode < 1500) {
     des_roll = 0;
   }
   else {
-    des_roll = map(rc_roll, 1000, 2000, -60, 60);
+    des_roll = map(rc_roll, RC_min, RC_max, roll_min, roll_max);
   }
 
   if (rc_pitch > 1450 && rc_pitch < 1550) {
     des_pitch = 0;
   }
   else {
-    des_pitch = map(rc_pitch, 1000, 2000, -60, 60);
+    des_pitch = map(rc_pitch, RC_min, RC_max, pitch_min, pitch_max);
   }
 
   if (rc_yaw > 1450 && rc_yaw < 1550) {
     des_yaw = 0;
   }
   else {
-    if (rc_throttle < 1000) {
-      des_yaw = 0;
-    }
-    else {
-      des_yaw = ((rc_yaw - 1500) * PI / 1000); // abs difference from mid-yaw
-    }
+    des_pitch = map(rc_yaw, RC_min, RC_max, yaw_min, yaw_max);
   }
 
   // Determine Outputs ========================================================================================

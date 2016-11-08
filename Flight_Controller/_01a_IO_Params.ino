@@ -15,8 +15,16 @@ enum modes {  // set of allowable mag full scale settings
   MONOCOPTER
 };
 
+float RC_min = 990;
+float RC_max = 2010;
+float pitch_min = -PI / 4;
+float pitch_max = PI / 4;
+float roll_min = -PI / 4;
+float roll_max = PI / 4;
+float yaw_min = -PI / 4;
+float yaw_max = PI / 4;
 uint8_t mode = DEACTIVATED;
-float arm_start = 0, rc_throttle_min = 1000;
+float arm_start = 0;
 bool arming = false;
 
 PulsePositionInput myIn;
@@ -35,15 +43,15 @@ const int8_t R_FLAP = 23;
 
 float des_yaw, des_roll, des_pitch, des_heading, yaw_out, pitch_out, roll_out, fw_trim, hold_heading;
 
-float e_Roll[3] = {0.0f, 0.0f, 0.0f};
-float e_Pitch[3] = {0.0f, 0.0f, 0.0f};
-float e_sYaw[3] = {0.0f, 0.0f, 0.0f};
-float e_rYaw[3] = {0.0f, 0.0f, 0.0f};
+// First three terms are the angle controller, last three terms are the rate controller (PID)
 
-float K_Roll[3] = {5.0f, 0.00f, 0.0f};
-float K_Pitch[3] = {5.0f, 0.00f, 0.0f};
-float K_sYaw[3] = {0.0f, 0.0f, 0.0f};
-float K_rYaw[3] = {0.0f, 0.0f, 0.0f};
+float e_Roll[6]  = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+float e_Pitch[6] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+float e_Yaw[6]   = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+
+float K_Roll[6]  = {5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+float K_Pitch[6] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+float K_Yaw[6]   = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
 float fw_throttle;
 

@@ -2,11 +2,8 @@
 else if (rc_mode > 1500) {
   // Set Mode Origins ============================================================================================
 
-  l_origin = servo_max; //servo_max - 26; // Counter-Clockwise
-  r_origin = servo_max; //servo_max - 18;
-
-  // l_origin = servo_min + 5;    // Clockwise
-  // r_origin = servo_min + 15;
+  l_origin = servo_max;
+  r_origin = servo_max;
 
   // Prep Flight Mode ============================================================================================
   if (mode != MONOCOPTER) {
@@ -35,14 +32,14 @@ else if (rc_mode > 1500) {
     des_roll = 0;
   }
   else {
-    des_roll = map(rc_roll, 950.0, 2050.0, -1000, 1000) / 1000.0;
+    des_roll = map(rc_roll, RC_min, RC_max, -1000, 1000) / 1000.0;
   }
 
   if (rc_pitch > 1450 && rc_pitch < 1550) {
     des_pitch = 0;
   }
   else {
-    des_pitch = map(rc_pitch, 950.0, 2050.0, -1000, 1000) / 1000.0;
+    des_pitch = map(rc_pitch, RC_min, RC_max, -1000, 1000) / 1000.0;
   }
 
   // Process Data =============================================================================================

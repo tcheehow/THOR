@@ -61,7 +61,6 @@ void loop()
 
       if (millis() > (arm_start + 2000) && arming == true) {
         arming = false;
-        rc_throttle_min = rc_throttle;
         break;
       }
     }

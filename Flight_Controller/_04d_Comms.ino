@@ -18,11 +18,11 @@ if (delt_t > 500) {
       debug("RFlap Command: ");
       debug(con_rflap);
       debug("\t");
-      debug("e_Pitch[0]: ");
-      debug(e_Pitch[0]);
+      debug("rc_Roll: ");
+      debug(rc_roll);
       debug("\t");
-      debug("e_Roll[0]");
-      debug(e_Roll[0]);
+      debug("rc_Pitch");
+      debug(rc_pitch);
       debug("\t");
       debugln(" ");
     }
