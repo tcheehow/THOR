@@ -2,28 +2,48 @@
 
 if (delt_t > 500) {
   if (rc_mode < 1500) {
-    if (debugger == true) {  // Print to Serial Monitor
+    if (debugger == true) {
       debug("[Fixed Wing]\tThrottle: ");
       debug(rc_throttle);
-      debug(" \t");
+      debug("  ");
+      /*
       debug("Motor Left: ");
       debug(con_lmotor);
-      debug(" \t");
+      debug("  ");
       debug("Motor Right: ");
       debug(con_rmotor);
-      debug("\t");
+      debug("  ");
+      */
       debug("LFlap Command: ");
       debug(con_lflap);
-      debug("\t");
+      debug("  ");
       debug("RFlap Command: ");
       debug(con_rflap);
-      debug("\t");
-      debug("rc_Roll: ");
-      debug(rc_roll);
-      debug("\t");
-      debug("rc_Pitch");
-      debug(rc_pitch);
-      debug("\t");
+      debug("  ");
+      /*
+      debug("rtrim: ");
+      debug(r_trim);
+      debug("  ");
+      debug("ltrim: ");
+      debug(l_trim);
+      */
+
+      debug("stab roll: ");
+      debug(stab_roll);
+      debug("  ");
+      debug("Roll: ");
+      debug(roll);
+      debug("  ");
+      debug("Roll Rate: ");
+      debug(roll_rate);
+      debug("  ");
+      debug("Rate P: ");
+      debug(K_Roll[3]);
+      debug("  ");
+      debug("Stabilize P: ");
+      debug(K_Roll[0]);
+      debug("  ");
+
       debugln(" ");
     }
     else {  // Log to SD Card

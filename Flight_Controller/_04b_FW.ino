@@ -10,8 +10,7 @@ if (rc_mode < 1500) {
   if (mode != FIXED_WING) {
     memset(e_Roll, 0, sizeof(e_Roll));
     memset(e_Pitch, 0, sizeof(e_Pitch));
-    memset(e_sYaw, 0, sizeof(e_sYaw));
-    hold_heading = yaw;
+    memset(e_Yaw, 0, sizeof(e_Yaw));
     mode = FIXED_WING;
   }
 
@@ -49,30 +48,38 @@ if (rc_mode < 1500) {
   MadgwickQuaternionUpdate(ax, ay, az, gx * PI / 180.0f, gy * PI / 180.0f, gz * PI / 180.0f,  mx,  my, -mz);
   //  MahonyQuaternionUpdate(ax, ay, az, gx*PI/180.0f, gy*PI/180.0f, gz*PI/180.0f, mx, my, -mz);
 
+  yaw_old = yaw;
+  pitch_old = pitch;
+  roll_old = roll;
+  
   yaw   = atan2(2.0f * (q[1] * q[2] + q[0] * q[3]), q[0] * q[0] + q[1] * q[1] - q[2] * q[2] - q[3] * q[3]);
   pitch = -asin(2.0f * (q[1] * q[3] - q[0] * q[2]));
   roll  = -atan2(2.0f * (q[0] * q[1] + q[2] * q[3]), q[0] * q[0] - q[1] * q[1] - q[2] * q[2] + q[3] * q[3]);
+
+  yaw_rate = (yaw - yaw_old)/deltat;
+  pitch_rate = (pitch - pitch_old)/deltat;
+  roll_rate = (roll - roll_old)/deltat;
 
   // Determine Desired Positions and Check for Deadzones =========================================================
   if (rc_roll > 1450 && rc_roll < 1550) {
     des_roll = 0;
   }
   else {
-    des_roll = map(rc_roll, RC_min, RC_max, roll_min, roll_max);
+    des_roll = map(rc_roll, RC_min, RC_max, roll_min*1000, roll_max*1000)/1000.0;
   }
 
   if (rc_pitch > 1450 && rc_pitch < 1550) {
     des_pitch = 0;
   }
   else {
-    des_pitch = map(rc_pitch, RC_min, RC_max, pitch_min, pitch_max);
+    des_pitch = map(rc_pitch, RC_min, RC_max, pitch_min*1000, pitch_max*1000)/1000.0;
   }
 
   if (rc_yaw > 1450 && rc_yaw < 1550) {
     des_yaw = 0;
   }
   else {
-    des_pitch = map(rc_yaw, RC_min, RC_max, yaw_min, yaw_max);
+    des_yaw = map(rc_yaw, RC_min, RC_max, yaw_min*1000, yaw_max*1000)/1000.0;
   }
 
   // Determine Outputs ========================================================================================
@@ -80,7 +87,7 @@ if (rc_mode < 1500) {
   // Throttle =============
   fw_throttle = rc_throttle;
 
-  // Roll/Pitch ============
+  // Roll/Pitch Angle (Stabilize) Controller ============
   e_Pitch[2] = (des_pitch - pitch) - e_Pitch[0];
   e_Roll[2]  = (des_roll - roll) - e_Roll[0];
 
@@ -90,82 +97,52 @@ if (rc_mode < 1500) {
   e_Pitch[1] += (e_Pitch[0] * deltat);
   e_Roll[1]  += (e_Roll[0] * deltat);
 
-  //pitch_out = K_Pitch[0] * e_Pitch[0] + K_Pitch[1] * e_Pitch[1] + K_Pitch[2] * e_Pitch[2];
-  //roll_out  = K_Roll[0] * e_Roll[0] + K_Roll[1] * e_Roll[1] + K_Roll[2] * e_Roll[2];
+  stab_pitch = K_Pitch[0] * e_Pitch[0] + K_Pitch[1] * e_Pitch[1] + K_Pitch[2] * e_Pitch[2];
+  stab_roll  = K_Roll[0] * e_Roll[0] + K_Roll[1] * e_Roll[1] + K_Roll[2] * e_Roll[2];
 
-  pitch_out = des_pitch;
-  roll_out  = des_roll;
+  // Roll/Pitch Rate Controller ============
+  e_Pitch[5] = (stab_pitch - pitch_rate) - e_Pitch[3];
+  e_Roll[5]  = (stab_roll - roll_rate) - e_Roll[3];
 
-  // Yaw ============
-  //  if (des_yaw == 0) {
-  // do nothing
-  // }
-  // else if (des_yaw != 0 {
-  //   des_heading = des_yaw + yaw;
+  e_Pitch[3] = stab_pitch - pitch_rate;
+  e_Roll[3]  = stab_roll - roll_rate;
 
-  if (des_yaw == 0) des_heading = hold_heading;
-  else {
-    hold_heading += des_yaw;
-    des_heading = hold_heading;
-  }
+  e_Pitch[4] += (e_Pitch[3] * deltat);
+  e_Roll[4]  += (e_Roll[3] * deltat);
 
-  // Yaw to North ======
-  /*
-    des_heading = 0;
+  pitch_out = K_Pitch[3] * e_Pitch[3] + K_Pitch[4] * e_Pitch[4] + K_Pitch[5] * e_Pitch[5];
+  roll_out  = K_Roll[3] * e_Roll[3] + K_Roll[4] * e_Roll[4] + K_Roll[5] * e_Roll[5];
 
-    e_sYaw[2] = (yaw - des_heading) - e_sYaw[0];
-    e_sYaw[0] = yaw - des_heading;
-    e_sYaw[1] += (e_sYaw[0]  * deltat);
+  // Yaw Controller ============
+  e_Yaw[2] = des_yaw - e_Yaw[0];
+  e_Yaw[0] = des_yaw;
+  e_Yaw[1] += (e_Yaw[0]  * deltat);
 
-    yaw_out = K_sYaw[0] * e_sYaw[0] + K_sYaw[1] * e_sYaw[1] + K_sYaw[2] * e_sYaw[2];
-  */
+  yaw_out = K_Yaw[0] * e_Yaw[0] + K_Yaw[1] * e_Yaw[1] + K_Yaw[2] * e_Yaw[2];
 
-  // Direct Yaw Input   ====
-
-  e_sYaw[2] = des_yaw - e_sYaw[0];
-  e_sYaw[0] = des_yaw;
-  e_sYaw[1] += (e_sYaw[0]  * deltat);
-
-  yaw_out = K_sYaw[0] * e_sYaw[0] + K_sYaw[1] * e_sYaw[1] + K_sYaw[2] * e_sYaw[2];
-
-  // Actual Outputs
+  // Outputs ======
+  // Flap ===
   con_lflap = l_trim + l_origin - (pitch_out - roll_out);
   con_rflap = r_trim + r_origin + pitch_out + roll_out;
 
-  // ===
-  if (con_lflap > servo_max) {
-    con_lflap = servo_max;
+  // Motor
+  if (fw_throttle < throttle_trigger) {
+    con_lmotor = con_rmotor = 0;
   }
-  else if (con_lflap < servo_min) {
-    con_lflap = servo_min;
+  else {
+    if (yaw_out > 0) {
+      con_lmotor = fw_throttle + yaw_out;
+      con_rmotor = fw_throttle;
+    }
+    else if (yaw_out < 0) {
+      con_lmotor = fw_throttle;
+      con_rmotor = fw_throttle - yaw_out;
+    }
+    else if (yaw_out == 0) {
+      con_lmotor = fw_throttle;
+      con_rmotor = fw_throttle;
+    }
   }
-
-  if (con_rflap > servo_max) {
-    con_rflap = servo_max;
-  }
-  else if (con_rflap < servo_min) {
-    con_rflap = servo_min;
-  }
-
-  // ==
-
-  if (yaw_out > 0) {
-    con_lmotor = fw_throttle + yaw_out;
-    con_rmotor = fw_throttle;
-  }
-  else if (yaw_out < 0) {
-    con_lmotor = fw_throttle;
-    con_rmotor = fw_throttle - yaw_out;
-  }
-  else if (yaw_out == 0) {
-    con_lmotor = fw_throttle;
-    con_rmotor = fw_throttle;
-  }
-
-  if (fw_throttle < 1000) {
-    con_lmotor = con_rmotor = 1000;
-  }
-
 
   // ===
 
@@ -174,6 +151,7 @@ if (rc_mode < 1500) {
 
   L_Motor.write(con_lmotor);
   R_Motor.write(con_rmotor);
+  delay(100);
 }
 
 

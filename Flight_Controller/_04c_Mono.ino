@@ -9,7 +9,7 @@ else if (rc_mode > 1500) {
   if (mode != MONOCOPTER) {
     memset(e_Roll, 0, sizeof(e_Roll));
     memset(e_Pitch, 0, sizeof(e_Pitch));
-    memset(e_sYaw, 0, sizeof(e_sYaw));
+    memset(e_Yaw, 0, sizeof(e_Yaw));
     mode = MONOCOPTER;
   }
 

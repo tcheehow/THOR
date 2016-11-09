@@ -7,7 +7,7 @@ void loop()
     if (mode != DEACTIVATED) {
       memset(e_Roll, 0, sizeof(e_Roll));
       memset(e_Pitch, 0, sizeof(e_Pitch));
-      memset(e_sYaw, 0, sizeof(e_sYaw));
+      memset(e_Yaw, 0, sizeof(e_Yaw));
       mode = DEACTIVATED;
     }
 
@@ -102,11 +102,11 @@ void loop()
 
   // On-The-Fly Editing =========================================================================================
   if (rc_aux2 < 1000) {
-    r_trim = map(rc_aux1, 900, 1900, -60, 60);
+    K_Roll[0] = map(rc_aux1, RC_min, RC_max, 0, 5000)/100.0;
 
   }
   else if (rc_aux2 > 1900) {
-    l_trim = map(rc_aux1, 900, 1900, -60, 60);
+    K_Roll[3] = map(rc_aux1, RC_min, RC_max, 0, 5000)/100.0;
 
   }
   else {

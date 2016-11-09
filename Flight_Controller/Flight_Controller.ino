@@ -75,7 +75,7 @@
 // ======================================================================================
 // Tuning Section
 
-#define sens_calib false
+#define sens_calib true
 #define rc_calib false
 
 //char* data_out[]={"Throttle", "Pitch", "Roll","Motor Left", "Motor Right","LFlap","RFlap","mx","my","mz","K_Mono","Mono_Trim"};

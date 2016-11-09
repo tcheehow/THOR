@@ -23,6 +23,8 @@ float roll_min = -PI / 4;
 float roll_max = PI / 4;
 float yaw_min = -PI / 4;
 float yaw_max = PI / 4;
+float yaw_old, pitch_old, roll_old;
+float pitch_rate = 0, roll_rate = 0, yaw_rate = 0;
 uint8_t mode = DEACTIVATED;
 float arm_start = 0;
 bool arming = false;
@@ -41,7 +43,7 @@ const int8_t R_FLAP = 23;
 // ===========================================================================================================
 // Fixed Wing Controller Variables ===========================================================================
 
-float des_yaw, des_roll, des_pitch, des_heading, yaw_out, pitch_out, roll_out, fw_trim, hold_heading;
+float des_yaw, des_roll, des_pitch, stab_yaw, stab_roll, stab_pitch, yaw_out, pitch_out, roll_out;
 
 // First three terms are the angle controller, last three terms are the rate controller (PID)
 
@@ -49,7 +51,7 @@ float e_Roll[6]  = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 float e_Pitch[6] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 float e_Yaw[6]   = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
-float K_Roll[6]  = {5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+float K_Roll[6]  = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 float K_Pitch[6] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 float K_Yaw[6]   = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
@@ -72,7 +74,10 @@ Servo L_Motor;
 
 float servo_min = 0;
 float servo_max = 60;
-float l_trim, r_trim, l_origin, r_origin;
+float throttle_trigger = 1000;
+float l_trim = 22;
+float r_trim = 19;
+float l_origin, r_origin;
 float con_lmotor, con_rmotor, con_lflap = 0, con_rflap = 0;
 float lflap_check, rflap_check;
 
