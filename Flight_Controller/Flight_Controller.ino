@@ -19,6 +19,7 @@
     CC  ------------- FC
     0   -------------- 1
     1   -------------- 0
+    2   -------------- 2
     GND -------------- GND
 
     Motors/Servos ------------ FC
@@ -35,10 +36,10 @@
     GND ---------------------- GND (UBEC)
 
     Notifiers ------- FC
-    Status LED ------ 2
+    Status LED ------ 3
 
     Available Pins
-    2,3,4,5,6,7,8,10,11,12,13,14,15,18,19
+    4,5,6,7,8,10,11,12,13,14,15,18,19
 */
 
 #define debugger 1      // On/Off the debug prints

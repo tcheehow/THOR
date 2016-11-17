@@ -1,6 +1,6 @@
 void loop() {
   // Time for next record.
-  logTime += 1000UL*SAMPLE_INTERVAL_MS;
+  logTime += 1000UL * SAMPLE_INTERVAL_MS;
 
   // Wait for log time.
   int32_t diff;
@@ -13,6 +13,19 @@ void loop() {
     error("Missed data record");
   }
 
+  // Grab that data ===========================
+  int trigger = digitalRead(2);
+  
+  if (trigger == HIGH) {
+    comm_supervisor();
+    sorter();
+
+    memset(inData, 0, sizeof(inData));
+  }
+  else {
+    // Serial.println("kappa");
+  }
+  
   logData();
 
   // Force data to SD and update the directory entry to avoid data loss.

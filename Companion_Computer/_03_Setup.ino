@@ -1,11 +1,12 @@
 void setup() {
 
+  // Debug Initialization ========================================
+  Serial.begin(19200);
+
   // SD Card Initialization ======================================
 
   const uint8_t BASE_NAME_SIZE = sizeof(FILE_BASE_NAME) - 1;
   char fileName[13] = FILE_BASE_NAME "00.csv";
-
-  Serial.begin(9600);
 
   // Wait for USB Serial
   while (!Serial) {
@@ -58,5 +59,6 @@ void setup() {
   logTime *= 1000UL * SAMPLE_INTERVAL_MS;
 
   // FC Transmission Initialization
-  Serial1.begin(115200);
+  Serial1.begin(19200);
+  pinMode(2, INPUT);
 }

@@ -1,24 +1,23 @@
 // ====================================================================================================
 // FC Transmission ====================================================================================
 
-void sorter (const byte c) {
-  char kappa = c;
-  if (kappa == 'A') {
-    binaryFloat lol;
-    for (int j = 0; j < i + 1; j ++) {
-      lol.binary[j] = buff[j];
+void sorter() {
+  for (uint8_t i = 0; i < items; i += 1) {
+    header = header_list[i];
+    binaryFloat header;
+    for (uint8_t j = 0; j < 4; j += 1) {
+      uint8_t count = (i * 4) + j;
+      header.binary[j] = inData[count];
+      datar[i] = header.floatingPoint;
     }
-    Serial.println(lol.floatingPoint);
-    i = 0;
-    Serial1.flush();
-    //delay(1000);
   }
-  else {
-    buff[i] = c;
-    i += 1;
-  //  Serial.println(i);
-    //   Serial.println(buff[i],BIN);
+}
 
+void comm_supervisor() {
+  inIndex = 0;
+  while (Serial1.available ()) {
+    inData[inIndex] = Serial1.read();
+    inIndex += 1;
   }
 }
 

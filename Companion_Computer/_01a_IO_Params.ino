@@ -18,8 +18,14 @@ typedef union {
   byte binary[4];
 } binaryFloat;
 
-byte buff[4];
-int i = 0;
+uint8_t items = 15;
+
+char header;
+
+char header_list[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'};
+float datar[15];
+uint8_t inIndex;
+char inData[60];
 
 // ====================================================================================================
 

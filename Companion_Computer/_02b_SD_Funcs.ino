@@ -18,7 +18,7 @@ void logData() {
 
   // Read all channels to avoid SD write latency between readings.
   for (uint8_t i = 0; i < DATA_COUNT; i++) {
-    data[i] = analogRead(i);
+    data[i] = datar[i];
   }
   // Write data to file.  Start with log time in micros.
   file.print(logTime);
