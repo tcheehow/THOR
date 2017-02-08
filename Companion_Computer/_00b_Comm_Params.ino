@@ -16,7 +16,7 @@ const char *data_pool[] =        // Key that links binary data to data text.
 };
 
 // Data Parameters
-byte inData[60];                 // Incoming bytes of data from FC.
+byte inData[96];                 // Incoming bytes of data from FC.
 uint8_t data_tally = 0;          // Units of data per FC transmission.
 
 // Comm Notifiers

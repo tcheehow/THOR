@@ -50,8 +50,8 @@ void file_setup(byte info_packet[]) {
   file.print((header));
   file.println();
 
-  debug("Data setup complete. Outputting: ");
-  debug(header);
+  debugln("Data setup complete. Outputting: ");
+  debugln(header);
 }
 
 /* comm_manager handles all FC to CC communications and decides what to do with said data. It will save a data log

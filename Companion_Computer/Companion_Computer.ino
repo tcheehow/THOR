@@ -28,7 +28,7 @@
     * Some EOL data detection in the event that bytes within a single data packet are corrupt.
     * Remove that damned comma at the end of the header string.
     * Switch the Serial1 reads to be check via ISR instead perhaps?
-    * Find out why it takes forever for the header to be setup.
+    * SdFatSdioEX seems to implement buffering automatically. Cool stuff. Much love.
 */
 
 #define debugger 1      // On/Off the debug prints

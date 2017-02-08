@@ -18,6 +18,9 @@ float *rc_throttle, *rc_yaw,            //
 *rc_aux1, *rc_aux2, *rc_orientation;    //
 PulsePositionInput receiver;            // Define the PPM input
 
+// Actuators
+Servo myservo
+
 // CC Link
 uint32_t logTime;                       // Next scheduled logging time
 byte packet[packet_size];               // Array to store data for sending
