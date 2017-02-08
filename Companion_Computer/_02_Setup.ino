@@ -6,6 +6,6 @@ void setup() {
   debugln("LED Initialized");
   delay(100);
 
-  pinMode(TRIGGER_PIN, INPUT);
+  pinMode(TRIGGER_PIN, INPUT_PULLDOWN);
 }
 

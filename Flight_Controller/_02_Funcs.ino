@@ -28,9 +28,9 @@ void courier() {
     }
   }
 
-  digitalWrite(2, HIGH);
-  Serial1.write(packet, packet_size);
   digitalWrite(2, LOW);
+  Serial1.write(packet, stepper);
+  digitalWrite(2, HIGH);
 }
 
 void myinthandler()

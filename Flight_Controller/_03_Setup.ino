@@ -25,9 +25,9 @@ void setup() {
   delay(100);
 
   // Inform the CC who you are and what you're sending.
-  digitalWrite(2, HIGH);
-  Serial1.write(fc_info, 4);
   digitalWrite(2, LOW);
+  Serial1.write(fc_info, 4);
+  digitalWrite(2, HIGH);
   debugln("CC Packet Setup Sent");
 
   // Setup for Master mode, pins 18/19, external pullups, 400kHz for Teensy 3.1

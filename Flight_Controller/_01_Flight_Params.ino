@@ -7,7 +7,7 @@ typedef union {
 } binaryFloat;
 
 // Comm Parameters
-const uint8_t PACKET = 24;                    // Maximum 24 data items
+const uint8_t PACKET = 24;              // Maximum 24 data items
 float data[PACKET];                     // Array to store data for calculation
 const uint8_t packet_size = PACKET*4;   // Equivalent bytes used (4 since float)
 
@@ -23,7 +23,7 @@ uint32_t logTime;                       // Next scheduled logging time
 byte packet[packet_size];               // Array to store data for sending
 
 // Data Sending Config. Check here for auto-builder: https://docs.google.com/spreadsheets/d/1zc99wD7a6oJdFJYQSk1t636u66vdOulCESkB16MxtQM/edit#gid=2055303250
-const byte fc_info[] = {B11111111, B10000001, B00000011, B10000111};
+const byte fc_info[] = {B11111111, B11111111, B11111111, B11111111};
 
 //  Notifiers
 const uint8_t SYNC_LED_PIN = 13;        // LED pin for syncing with Optitrack data

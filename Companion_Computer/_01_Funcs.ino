@@ -52,8 +52,6 @@ void file_setup(byte info_packet[]) {
 
   debug("Data setup complete. Outputting: ");
   debug(header);
-
-  logTime = millis();
 }
 
 /* comm_manager handles all FC to CC communications and decides what to do with said data. It will save a data log
@@ -73,7 +71,7 @@ void comm_manager() {
     record = false;
     file.close();
   }
-
+  
   while (Serial1.available()) {                               // Receiving something from FC.
     inData[inIndex] = Serial1.read();
     inIndex += 1;
@@ -88,21 +86,24 @@ void comm_manager() {
     uint8_t count;
     binaryFloat letterbox;
 
-    for (uint8_t i = 0; i < data_tally; i ++) {               // Decipher the data and dump it into buffer. Tell charon.
+    for (uint8_t i = 0; i < data_tally; i ++) {                 // Decipher the data and dump it into buffer. Tell charon.
       for (uint8_t j = 0; j < 4; j ++) {
         count = (i * 4) + j;
         letterbox.binary[j] = inData[count];
       }
-      debug(buff[charon]);
-      debug("  |  ");
       buff[charon] = letterbox.floatingPoint;
       charon += 1;
     }
-    debugln();
   }
-  else {                                                      // Something terrible has happened...
+
+  else if ((inData[0] == B11111111) && (record == true)) {      // Receiving header but I was recording prior.
+    debugln("Missed an FC reset (was still recording). Logging error and continuing record.");
+    file.write("Missed an FC reset (was still recording). Logging error and continuing record.");
+    file.println();
     digitalWrite(LED_PIN, LOW);
-    debugln("Comm Manager either missing the header or it missed an FC reset. Try a restart");
+  }
+  else {                                                        // Receiving item data, but I have no header (file already closed).
+    digitalWrite(LED_PIN, LOW);
   }
 }
 
