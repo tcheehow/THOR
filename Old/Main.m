@@ -32,17 +32,20 @@ clear; close all
 %%% General %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Craft_Name   = 'Flat_Plate_Dual_250g'; % Craft Name
-Resolution   = 30;                               % Number of blade elements
+Resolution   = 20;                               % Number of blade elements
 m            = 0.250;                            % Mass of Craft (kg)
 R            = 0.30;                             % Wing Radius (m)
-N_b          = 2;                                % Number of wings
+N_b          = 1;                                % Number of wings
 I            = [0.00021, -0.00024,  -0.00003;    %
                 0.00024,  0.00283,  -0.00001;    % Inertia Tensor (kg m^3)
                 0.00003, -0.00001,   0.00303];
+           I            = [0.00021, 0,  0;    %
+                0,  0.00283,  0;    % Inertia Tensor (kg m^3)
+                0, 0,   0.00303];
 D            = 0.12065;                          % Propeller Diameter (m)     
 x_motor      = [0.16 ; 0 ; 0];                   % Distance Between Motor and Centre of Mass (m)        
-prop_file    = '475x475E';                       % Database file to pull prop data from
-airfoil_file = 'NACA0012_NCrit5_Re_400000';      % Database file to pull airfoil data from
+prop_file    = 'Database/475x475E';                       % Database file to pull prop data from
+airfoil_file = 'Database/NACA0012_NCrit5_Re_400000';      % Database file to pull airfoil data from
 Cl_grad      = 6.2849;                           % We assume wing operates along linear Cl/Alpha region
 Cl_upper     =  0.17453;                         % Upper angle limit of Cl_grad assumption
 Cl_lower     = -0.17453;                         % Lower angle limit of Cl_grad assumption
@@ -51,7 +54,7 @@ Cl_optimal   =  0;                         % Optimal point of Cl_grad assumption
 r              = linspace((1./Resolution),1,Resolution);
 prop_data      = xlsread(prop_file,1);
 airfoil_data   = xlsread(airfoil_file,'Main','A3:D335');
-folder         = '/Users/lowjunen/GitHub/THOR/Model/Output/';
+folder         = '/Users/lowjunen/GitHub/THOR/Old/Output/';
 %folder         = '/Users/Administrator/Desktop/Base VIII/Output/';
 reference      = strcat(folder,'Reference_Signals.csv');
 output_array   = strcat(folder,Craft_Name,'State_Space_Array.csv');
