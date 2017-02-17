@@ -7,5 +7,8 @@ if type == 0
     a = var(1) + (var(2) * r);
 
 elseif type == 1
-    a = var./r;    
+    a = var./r;   
+    
+elseif type == 2
+    a = var;
 end

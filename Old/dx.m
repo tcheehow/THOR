@@ -33,6 +33,8 @@ function [dx wing_effects] = dx(t,x,scalars, wing, prop_data, airfoil_data, p_in
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% Unpacking Inputs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+lambda_c = 0;
+
 %%% Scalars
 Resolution   = scalars(1);
 m            = scalars(2);
@@ -72,7 +74,11 @@ global t_check
 
 %%% Controller %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[theta_con n_con t_check] = controller(x,t,p_input,theta);
+%[theta_con n_con t_check] = controller(x,t,p_input,theta);
+
+n_con = 0;
+t_check = 1;
+theta_con = 0;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Forces and Moments %%%%%%%%%%%%%%%%%%%%%%%%%%%%
